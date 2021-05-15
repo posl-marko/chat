@@ -1,7 +1,10 @@
 import {Component} from "react";
 import React from "react";
 
+const randomKey = Math.round(Math.random() * (9999999999 - 1) + 1);
+
 class Messages extends Component {
+
   render() {
     const {messages} = this.props;
     return (
@@ -17,7 +20,7 @@ class Messages extends Component {
     const className = messageFromMe ?
       "Messages-message currentMember" : "Messages-message";
     return (
-      <li className={className}>
+      <li key={randomKey} className={className}>
         <span
           className="avatar"
           style={{backgroundColor: member.color}}
