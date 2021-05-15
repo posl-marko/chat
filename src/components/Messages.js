@@ -1,7 +1,7 @@
 import {Component} from "react";
 import React from "react";
 
-const randomKey = Math.round(Math.random() * (9999999999 - 1) + 1);
+const randomKey = Math.round(Math.random() * (99999999999 - 1) + 1);
 
 class Messages extends Component {
 
