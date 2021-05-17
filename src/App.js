@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import Messages from "./components/Messages";
+import Input from "./components/Input";
+import styled, { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme, GlobalStyles } from "./components/Themes";
 
 function randomName() {
   const adjectives = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry", "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring", "winter", "patient", "twilight", "dawn", "crimson", "wispy", "weathered", "blue", "billowing", "broken", "cold", "damp", "falling", "frosty", "green", "long", "late", "lingering", "bold", "little", "morning", "muddy", "old", "red", "rough", "still", "small", "sparkling", "throbbing", "shy", "wandering", "withered", "wild", "black", "young", "holy", "solitary", "fragrant", "aged", "snowy", "proud", "floral", "restless", "divine", "polished", "ancient", "purple", "lively", "nameless"];
@@ -12,6 +15,10 @@ function randomName() {
 function randomColor() {
   return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
 }
+
+const StyledApp = styled.div`
+  color: ${(props) => props.theme.fontColor};
+`;
 
 export default class App extends Component {
   state = {
@@ -27,17 +34,46 @@ export default class App extends Component {
     member: {
       username: randomName(),
       color: randomColor()
-    }
+    },
+    theme: 'light'
   }
+
+  onSendMessage = (message) => {
+    const messages = this.state.messages
+    messages.push({
+      text: message,
+      member: this.state.member
+    })
+    this.setState({messages: messages})
+  }
+
+  //const [theme, setTheme] = useState("light");
+
+  themeToggler = () => {
+    this.state.theme === "light" ? this.setState({theme: 'dark'}) : this.setState({theme: 'light'});
+  };
 
   render() {
     return (
-      <div className="App">
+      <ThemeProvider theme={this.state.theme === "light" ? lightTheme : darkTheme}>
+      <GlobalStyles />
+      <StyledApp>
+        <button onClick={this.themeToggler}>Change Theme</button>
+        <div className="App">
+        <div className="App-header">
+        <h1>My Chat App</h1>
+      </div>
         <Messages
           messages={this.state.messages}
           currentMember={this.state.member}
         />
+        <Input
+          onSendMessage={this.onSendMessage}
+        />
       </div>
+      </StyledApp>
+    </ThemeProvider>
+      
     );
   }
     

@@ -1,8 +1,6 @@
 import {Component} from "react";
 import React from "react";
 
-const randomKey = Math.round(Math.random() * (99999999999 - 1) + 1);
-
 class Messages extends Component {
 
   render() {
@@ -19,6 +17,7 @@ class Messages extends Component {
     const messageFromMe = member.id === currentMember.id;
     const className = messageFromMe ?
       "Messages-message currentMember" : "Messages-message";
+    const randomKey = Math.round(Math.random() * (99999999999 - 1) + 1);
     return (
       <li key={randomKey} className={className}>
         <span
